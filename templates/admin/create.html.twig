@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+{# Voir : https://symfony.com/doc/current/form/bootstrap4.html #}
+
+{% block title %}Créer un article{% endblock %}
+
+{% block body %}
+<h1>Création d'un article</h1>
+{{ form_start(formArticle) }}
+
+{{ form_widget(formArticle) }}
+
+<button type="submit" class="btn btn-success">
+    {% if editMode %}
+    Sauver les modifications
+    {% else %}
+    Créer l'article
+    {% endif %}
+    {{ form_end(formArticle) }}
+
+    {% endblock %}

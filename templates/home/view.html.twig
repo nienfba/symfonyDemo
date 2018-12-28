@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'article !{% endblock %}
+
+{% block body %}
+
+
+<h2>{{ article.title }}</h2>
+<img src="{{ article.image }}" alt="{{ article.title }}">
+<p>{{ article.content | raw }}</p>
+
+
+{% endblock %}

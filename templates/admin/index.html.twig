@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+<h1>Liste des articles</h1>
+<table class="table table-hover">
+    <thead>
+        <th>Id</th>
+        <th>Titre</th>
+        <th>Image</th>
+        <th>Date</th>
+        <th></th>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.id }}</td>
+            <td>{{ article.title }}</td>
+            <td>{{ article.image }}</td>
+            <td>{{ article.createdAt | date('d/m/Y')}}</td>
+            <td><a href="{{ path('article_edit',{'id':article.id}) }}"><i class="fas fa-edit"></i></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
