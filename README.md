@@ -32,8 +32,8 @@ Si ces deux lignes de commandes vous renvoient des informations tout est OK !
 * Maintenant il s'agit d'installer Symfony et ses dépendances, la base de données et d'y injecter le contenu pour celà :
  * `$ composer install` ou `$php composer.phar install`. Cette commande peut prendre plusieurs minutes :(
  * une fois le framework et ses dépendances mises à jour, modifier le fichier .env à la racine du répertoire `symfonyDemo`. Trouvez le ligne `$ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name` 
-Remplacez db_user et db_password et db_name par vos valeurs locales. Pour une installation standard de Wamp ou Mamp (ici le mot de passe est vide et la base s'appelle hackathon !!) : 
-`$ DATABASE_URL=mysql://root:@127.0.0.1:3306/hackthon`
+Remplacez db_user et db_password et db_name par vos valeurs locales. Pour une installation standard de Wamp ou Mamp (ici le mot de passe est vide et la base s'appelle symfonyBlog !!) : 
+`$ DATABASE_URL=mysql://root:@127.0.0.1:3306/symfonyBlog`
  * Nous allons maintenant créer la base de données, c'est automatique avec symfony !!:
 `$ php bin/console database:create`
  * Puis créer les tables de la bases :
@@ -43,6 +43,7 @@ Il faut répondre "y" à la question "WARNING ! ...."
  * Puis nous allons insérer les données dans la base : 
  `$ php bin/console doctrine:fixtures:load`
 Répondre "y" à la question "WARNING ! ...."
+* Si les images ne marche pas assurez vous d'avoir le paramètre `allow_url_fopen` de php à true et relancer la commande
 * Nous allons lancer un serveur Web avec PHP et les outils Symfony pour un fonctionnement optimal. On ne va pas passer par Apache donc, mais par un serveur Web spécifique.
 `$ php bin/console serveur:run`
 * Vous pouvez maintenant cliquer sur l'url proposée (normalement : http://127.0.0.1:8000)
