@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Faker\Factory;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -30,7 +32,6 @@ class AdminController extends AbstractController
      */
     public function article(Article $article = null, Request $request,ObjectManager $manager)
     {
-        
         if($article == null)
             $article = new Article();
         
@@ -43,18 +44,6 @@ class AdminController extends AbstractController
             if(!$article->getId())
                 $article->setCreatedAt(new \DateTime());
 
-            /** Upload de l'image https://symfony.com/doc/current/controller/upload_file.html */
-            $file = $article->getImage();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-            $article->setImage($fileName);
-            try {
-                // Voir config/services.yaml pour param articles_directory
-                $file->move($this->getParameter('articles_directory'),$fileName);
-            } catch (FileException $e) {
-                $article->setImage(null);
-            }
-
             $manager->persist($article);
             $manager->flush();
 
@@ -63,7 +52,20 @@ class AdminController extends AbstractController
 
         return $this->render('admin/create.html.twig', [
             'formArticle'=>$form->createView(),
-            'editMode' => $article->getId() !== null
+            'edit' => $article->getId() !== null
         ]);
+    }
+
+     /**
+     * @Route("/admin/article/{id}/del/", name="article_del")
+     */
+    public function delArticle(Article $article = null,  ObjectManager $manager)
+    {
+        if($article !== null)
+        {
+            $manager->remove($article);
+            $manager->flush();
+        }
+        return $this->redirectToRoute('article_liste');
     }
 }

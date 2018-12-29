@@ -6,17 +6,45 @@
 {% block title %}Créer un article{% endblock %}
 
 {% block body %}
+{% if edit %}
+<h1>Édition d'un article</h1>
+{% else %}
 <h1>Création d'un article</h1>
+{% endif %}
+
 {{ form_start(formArticle) }}
 
-{{ form_widget(formArticle) }}
+{{ form_row(formArticle.title) }}
+{{ form_row(formArticle.imageFile , {attr: {class: 'form-control-file'}}) }}
+{{ form_row(formArticle.content , {attr: {class: 'tiny'}} ) }}
 
 <button type="submit" class="btn btn-success">
-    {% if editMode %}
+    {% if edit %}
     Sauver les modifications
     {% else %}
     Créer l'article
     {% endif %}
-    {{ form_end(formArticle) }}
+</button>
+{{ form_end(formArticle) }}
 
-    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+<script>
+    tinymce.init({
+        selector: '.tiny',
+        height: 500,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code help wordcount'
+        ],
+        toolbar: 'insert | undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css']
+    });
+</script>
+{% endblock %}

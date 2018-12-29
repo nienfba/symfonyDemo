@@ -3,11 +3,10 @@
 {% block title %}Détails de l'article !{% endblock %}
 
 {% block body %}
-
-
-<h2>{{ article.title }}</h2>
-<img src="{{ article.image }}" alt="{{ article.title }}">
-<p>{{ article.content | raw }}</p>
-
-
+<article>
+    <h2>{{ article.title }}</h2>
+    <div class="metadata">ecrit le {{ article.createdAt | date('d/m/Y')}} par Fabien</div>
+    <img src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="{{ article.title }}" />
+    <p>{{ article.content | raw }}</p>
+</article>
 {% endblock %}

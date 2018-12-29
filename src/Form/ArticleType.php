@@ -6,7 +6,7 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ArticleType extends AbstractType
 {
@@ -14,11 +14,9 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('image', FileType::class, array('data_class' => null,'required' => false))
+            ->add('imageFile', VichImageType::class, ['required' => false, 'download_uri' => false])
             ->add('content')
         ;
-
-                    //->add('createdAt')
     }
 
     public function configureOptions(OptionsResolver $resolver)

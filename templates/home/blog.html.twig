@@ -4,19 +4,33 @@
 
 {% block body %}
 
-<section id="articles">
+<section>
     <h1>{{ title }}</h1>
+
     {% for article in articles %}
-    <article>
-        <h2>{{ article.title }}</h2>
-        <div class="metadata">ecrit le {{ article.createdAt | date('d/m/Y')}} par Fabien</div>
-        <div class="content">
-            <img src="{{ article.image }}" alt="{{ article.title }}">
-            <p>{{ article.content | raw }}</p>
-            <a href="{{ path('view_article', {'id':article.id}) }}" class="btn btn-primary">Lire la suite</a>
-        </div>
-    </article>
+
+    {% if loop.first %}
+    <div class="card-deck mb-3">
+        {% endif %}
+        <article class="card">
+            <img src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="{{ article.title }}" />
+            <div class="card-body">
+                <h2>{{ article.title }}</h2>
+                <a href="{{ path('view_article', {'id':article.id}) }}" class="btn btn-primary">Lire la suite</a>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">ecrit le {{ article.createdAt | date('d/m/Y')}} par Fabien</small>
+            </div>
+        </article>
+        {% if loop.index % 3 == 0 and not loop.last %}
+    </div>
+    <div class="card-deck mb-3">
+        {% endif %}
+        {% if loop.last %}
+    </div>
+    {% endif %}
     {% endfor %}
+    </div>
 
 </section>
 

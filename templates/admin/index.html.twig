@@ -17,9 +17,11 @@
         <tr>
             <td>{{ article.id }}</td>
             <td>{{ article.title }}</td>
-            <td>{{ article.image }}</td>
+            <td><img src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="{{ article.title }}" width="50" /></td>
             <td>{{ article.createdAt | date('d/m/Y')}}</td>
-            <td><a href="{{ path('article_edit',{'id':article.id}) }}"><i class="fas fa-edit"></i></a></td>
+            <td><a href="{{ path('article_edit',{'id':article.id}) }}"><i class="fas fa-edit"></i></a>
+                <a href="{{ path('article_del',{'id':article.id}) }}"><i class="fas fa-trash-alt"></i></a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
